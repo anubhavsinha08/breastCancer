@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register - MultiMed-CancerNet</title>
+
+  <!-- Fonts and Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    /* Same style from login page */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ebf8ff 0%, #f0fdf4 100%);
+      color: #1f2937;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .nav-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid #e5e7eb;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .nav-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .nav-badge {
+      background: #bbf7d0;
+      color: #15803d;
+      padding: 0.5rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e5e7eb;
+      padding: 2rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .form-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #6b7280;
+      margin-bottom: 0.25rem;
+    }
+
+    .form-input, .form-select {
+      padding: 0.75rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      background: #f9fafb;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      outline: none;
+    }
+
+    .btn {
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .btn-primary {
+      background: #16a34a;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #15803d;
+    }
+
+    .btn-primary:disabled {
+      background: #bbf7d0;
+      cursor: not-allowed;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 1rem;
+      color: #2563eb;
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-header">
+    <div class="nav-container">
+      <div class="nav-content">
+        <h1 class="nav-title">MultiMed-CancerNet</h1>
+        <span class="nav-badge">Register</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <form class="card fade-in"  method="post" action="/register">
+      <div class="card-header">
+        <i data-lucide="user-plus"></i>
+        <h2 class="card-title">Register</h2>
+      </div>
+
+      <div class="form-item">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" id="name" required placeholder="Your name" Name="name">
+      </div>
+
+      <div class="form-item">
+        <label class="form-label" >Email</label>
+        <input type="email" class="form-input" id="email" required placeholder="example@mail.com" Name="email">
+      </div>
+
+      <div class="form-item">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="password" required Name="password">
+      </div>
+
+      <div class="form-item">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-input" id="confirm-password" required>
+      </div>
+
+      <!-- <div class="form-item">
+        <label class="form-label">Age</label>
+        <input type="number" class="form-input" id="confirm-password" required>
+      </div> -->
+
+      <button type="submit" class="btn btn-primary" id="register-btn">Register</button>
+      <a href="/login" class="link">Already have an account? Login here</a>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      setupValidation();
+    });
+
+    function setupValidation() {
+      const fields = ['name', 'email', 'password', 'confirm-password'];
+      const inputs = fields.map(id => document.getElementById(id));
+      const registerBtn = document.getElementById('register-btn');
+
+      function validate() {
+        const allFilled = inputs.every(input => input.value.trim() !== '');
+        const passwordsMatch = document.getElementById('password').value === document.getElementById('confirm-password').value;
+        registerBtn.disabled = !(allFilled && passwordsMatch);
+      }
+
+      inputs.forEach(input => input.addEventListener('input', validate));
+    }
+
+    async function register(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      // const age = document.getElementById('age').value;
+      // const gender = document.getElementById('gender').value;
+
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message || "Registration successful!");
+        window.location.href = "/login.html";
+      } else {
+        alert(data.error || "Registration failed.");
+      }
+    }
+  </script>
+</body>
+
+</html>

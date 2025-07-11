@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - MultiMed-CancerNet</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ebf8ff 0%, #f0fdf4 100%);
+      color: #1f2937;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .nav-header {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid #e5e7eb;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .nav-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .nav-badge {
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 0.5rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .container {
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e5e7eb;
+      padding: 2rem;
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .form-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #6b7280;
+      margin-bottom: 0.25rem;
+    }
+
+    .form-input {
+      padding: 0.75rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      background: #f9fafb;
+    }
+
+    .form-input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      outline: none;
+    }
+
+    .btn {
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-primary:disabled {
+      background: #93c5fd;
+      cursor: not-allowed;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 1rem;
+      color: #2563eb;
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="nav-header">
+    <div class="nav-container">
+      <div class="nav-content">
+        <div class="nav-left">
+          <h1 class="nav-title">MultiMed-CancerNet</h1>
+          <span class="nav-badge">Login</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <form class="card fade-in" method="post" action="/login">
+      <div class="card-header">
+        <i data-lucide="log-in"></i>
+        <h2 class="card-title">Login</h2>
+      </div>
+      <div class="form-item">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" id="email" required placeholder="e.g., user@example.com" Name="email">
+      </div>
+      <div class="form-item">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="password" required placeholder="Enter your password" Name="password">
+      </div>
+      <button type="submit" class="btn btn-primary" id="login-btn" disabled>Login</button>
+      <a href="/register" class="link">Don't have an account? Register here</a>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      setupFormValidation();
+    });
+
+    function setupFormValidation() {
+      const email = document.getElementById('email');
+      const password = document.getElementById('password');
+      const loginBtn = document.getElementById('login-btn');
+
+      function validateForm() {
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+        const passwordValid = password.value.trim().length > 0;
+        loginBtn.disabled = !(emailValid && passwordValid);
+      }
+
+      email.addEventListener('input', validateForm);
+      password.addEventListener('input', validateForm);
+    }
+
+    async function login(e) {
+      e.preventDefault();
+
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message || "Login successful!");
+        window.location.href = "/dashboard";
+      } else {
+        alert(data.error || "Login failed.");
+      }
+    }
+  </script>
+</body>
+
+</html>

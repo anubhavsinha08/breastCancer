@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn About Breast Cancer - MultiMed-CancerNet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+      /* Base reset & styling */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #f0fdf4 0%, #ebf8ff 100%);
+        color: #1f2937;
+        scroll-behavior: smooth;
+      }
+      /* Nav */
+      .nav-header {
+        position: sticky;
+        top: 0;
+        background: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+      }
+      .nav-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .nav-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      .nav-badge {
+        background-color: #bbf7d0;
+        color: #047857;
+        padding: 0.5rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 2rem;
+      }
+      .section {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease-in-out;
+      }
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .section h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+      }
+      .section p,
+      .section ul,
+      .section ol {
+        color: #374151;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+      .tips-list {
+        padding-left: 1.5rem;
+        list-style: disc;
+      }
+      .workflow {
+        padding-left: 1.5rem;
+        list-style: decimal;
+      }
+      .highlight {
+        color: #2563eb;
+        font-weight: 600;
+      }
+      .toggle-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .toggle-content.open {
+        max-height: 500px;
+      }
+      .toggle-btn {
+        background: #2563eb;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+      .team {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+      .team-card {
+        background: #f9fafb;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        transition: transform 0.3s;
+      }
+      .team-card:hover {
+        transform: translateY(-4px);
+      }
+      .team-card img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-bottom: 0.75rem;
+      }
+      .video-container {
+        position: relative;
+        padding-top: 56.25%;
+      }
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 1rem;
+      }
+      .cta {
+        text-align: center;
+        margin: 3rem 0;
+      }
+      .btn {
+        background: #2563eb;
+        color: white;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1rem;
+        border: none;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .btn:hover {
+        background: #1d4ed8;
+      }
+      @media (max-width: 768px) {
+        .section h2 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav-header">
+      <div class="nav-container">
+        <div class="nav-title">MultiMed-CancerNet</div>
+        <div class="nav-badge">Learn More</div>
+      </div>
+    </div>
+    <div class="container">
+      <!-- Sections -->
+      <div class="section">
+        <h2><i data-lucide="activity"></i> What is Breast Cancer?</h2>
+        <p>
+          <span class="highlight">Breast cancer</span> arises when abnormal
+          cells in the breast tissue multiply uncontrollably, forming tumors
+          which may spread if not detected early.
+        </p>
+        <p>
+          Early detection greatly improves the 5-year survival rate—when
+          localized, it's around 99%, but drops markedly once metastasized.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2><i data-lucide="alert-triangle"></i> Symptoms & Risk Factors</h2>
+        <p>Watch out for:</p>
+        <ul class="tips-list">
+          <li>New lump or thickening in the breast</li>
+          <li>Skin dimpling or nipple retraction</li>
+          <li>Unusual nipple discharge</li>
+          <li>Persistent breast/axillary pain</li>
+        </ul>
+        <p>Main risk factors:</p>
+        <ul class="tips-list">
+          <li>Family history (1st-degree relatives)</li>
+          <li>BRCA1/2 mutation carriers</li>
+          <li>Age ≥50, early menstruation, late menopause</li>
+          <li>Obesity, alcohol use</li>
+          <li>Radiation exposure</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><i data-lucide="shield-check"></i> Prevention & Precautions</h2>
+        <button class="toggle-btn" onclick="toggleDetails()">
+          Show Prevention Tips
+        </button>
+        <div id="tips" class="toggle-content">
+          <ul class="tips-list">
+            <li>Stay active with ≥150 min/week of moderate exercise</li>
+            <li>Eat a plant-based, whole-food diet</li>
+            <li>Limit alcohol—no more than 1 drink/day</li>
+            <li>Avoid tobacco entirely</li>
+            <li>Perform monthly self-exams</li>
+            <li>Screen via mammography from age 40–75</li>
+            <li>
+              Discuss risk-reducing medications (e.g., tamoxifen) if high risk
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2><i data-lucide="cpu"></i> How Our Platform Works</h2>
+        <ol class="workflow">
+          <li>Secure upload of imaging & patient info</li>
+          <li>Automated preprocessing (denoising, normalization)</li>
+          <li>AI model identifies suspicious findings</li>
+          <li>Risk-scoring via ensemble learning</li>
+          <li>Clinician receives interactive report + heatmaps</li>
+        </ol>
+      </div>
+
+      <div class="section">
+        <h2>
+          <i data-lucide="heart-pulse"></i> Benefits for Doctors & Patients
+        </h2>
+        <ul class="tips-list">
+          <li><strong>Fast:</strong> Results in minutes, not days</li>
+          <li>
+            <strong>Accurate:</strong> ML models trained on thousands of cases
+          </li>
+          <li><strong>Scalable:</strong> Supports multi-center usage</li>
+          <li><strong>Format-agnostic:</strong> Works with DICOM, PNG, JPEG</li>
+          <li>
+            <strong>Educational:</strong> Heatmaps highlight areas of concern
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2><i data-lucide="users"></i> Meet the Team</h2>
+        <div class="team">
+          <div class="team-card">
+            <!-- <img src="https://via.placeholder.com/80" alt="Dr. S. Roy" /> -->
+            <h3>Abhirupa, Abdus & Ashesh</h3>
+            <p>Frontend Developer</p>
+          </div>
+          <div class="team-card">
+            <!-- <img src="https://via.placeholder.com/80" alt="Anubhav" /> -->
+            <h3>Anubhav</h3>
+            <p>Backend developer</p>
+          </div>
+          <div class="team-card">
+            <!-- <img src="https://via.placeholder.com/80" alt="R. Singh" /> -->
+            <h3>Ayan Pal</h3>
+            <p>ML Engineer</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2><i data-lucide="video"></i> Learn More via Video</h2>
+        <div class="video-container">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/KyeiZJrWrys?si=vDb3-tVWTUYwf6ZE"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="cta">
+        <p class="highlight">Ready to analyze real cases?</p>
+        <a href="/upload"><button class="btn">Go to Upload Page →</button></a>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+        const sections = document.querySelectorAll(".section");
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) e.target.classList.add("visible");
+            });
+          },
+          { threshold: 0.2 }
+        );
+        sections.forEach((s) => io.observe(s));
+      });
+      function toggleDetails() {
+        document.getElementById("tips").classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

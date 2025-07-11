@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prediction Result - MultiMed-CancerNet</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f9f9f9;
+      color: #222;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      page-break-inside: avoid;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .info-header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .info-header p {
+      font-size: 0.95rem;
+      margin: 3px 0;
+    }
+
+    .summary {
+      text-align: center;
+      margin: 20px auto;
+      font-size: 0.95rem;
+      max-width: 90%;
+    }
+
+    .result-box, .image-pair-box {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 30px;
+      page-break-inside: avoid;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      flex: 1 1 300px;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    .result-text {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .result-text.malignant {
+      color: #e74c3c;
+    }
+
+    .result-text.benign {
+      color: #27ae60;
+    }
+
+    .confidence-circle {
+      width: 200px;
+      height: 200px;
+      margin: auto;
+      position: relative;
+    }
+
+    .confidence-circle canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .image-pair-box img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .btns {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #2980b9;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #1c5980;
+    }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9rem;
+}
+
+.data-table thead {
+  background-color: #f2f2f2;
+}
+
+.data-table th, .data-table td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+.observation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9rem;
+}
+
+.observation-table th,
+.observation-table td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.observation-table thead {
+  background-color: #f2f2f2;
+}
+.severity-box {
+  margin: 30px auto;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+.severity-box h2 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.severity-card {
+  display: inline-block;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-size: 0.95rem;
+  max-width: 500px;
+  margin: auto;
+}
+
+.severity-label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.severity-advice {
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+/* Color variations */
+.high-risk {
+  background-color: #fdecea;
+  color: #c0392b;
+  border-left: 8px solid #c0392b;
+}
+
+.low-risk {
+  background-color: #eafaf1;
+  color: #2e7d32;
+  border-left: 8px solid #27ae60;
+}
+
+#modalityPie {
+  max-width: 450px;
+  height: 450px;
+  margin: 0 auto; /* centers the element horizontally */
+  display: block;
+}
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="pdfContent">
+      <h1>🧬 Cancer Prediction Report</h1>
+      <div class="info-header">
+        <p><strong>MultiMed-CancerNet</strong></p>
+        <p>Patient ID: <span id="patientID">#BC10234</span></p>
+        <p>Date: <span id="reportDate"></span></p>
+      </div>
+      <p class="summary">Based on the provided medical scans, the AI model predicts a malignant tumor with high confidence. Clinical consultation is strongly recommended to confirm and begin appropriate treatment.</p>
+      <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.9rem;">
+        <thead>
+          <tr style="background-color: #f2f2f2;">
+            <th style="text-align: left; padding: 8px; border: 1px solid #ccc;">Parameter</th>
+            <th style="text-align: left; padding: 8px; border: 1px solid #ccc;">Normal Range</th>
+            <th style="text-align: left; padding: 8px; border: 1px solid #ccc;">Reported Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc;">Tumor Size</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">≤ 2.0 cm</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">2.6 cm</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc;">Density Score</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">1 – 4</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">3</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc;">BI-RADS Category</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">1 – 2 (Safe)</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">5</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ccc;">Risk Score</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">≤ 50%</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">87.4%</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="observation-table">
+        <thead>
+          <tr>
+            <th>Observation</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tumor Margins</td>
+            <td>Irregular, non-circumscribed</td>
+          </tr>
+          <tr>
+            <td>Echo Pattern</td>
+            <td>Hypoechoic with shadowing</td>
+          </tr>
+          <tr>
+            <td>Calcifications</td>
+            <td>Present</td>
+          </tr>
+          <tr>
+            <td>Associated Findings</td>
+            <td>Architectural distortion observed</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="severity-box">
+        <h2>🩺 Final Assessment</h2>
+        <div class="severity-card high-risk">
+          <p class="severity-label">Diagnosis: <strong>Malignant</strong></p>
+          <p>Confidence: <strong>87.4%</strong></p>
+          <p>Risk Level: <strong>High Risk</strong></p>
+          <p class="severity-advice">⚠️ Immediate clinical consultation is recommended.</p>
+        </div>
+      </div>
+      
+      <!-- 🧠 Keep charts on the same page -->
+<div class="result-box">
+    <div class="card">
+      <div id="resultLabel" class="result-text">Malignant</div>
+      <div class="confidence-circle">
+        <canvas id="confidenceChart"></canvas>
+      </div>
+      <p style="margin-top: 100px;">Confidence: <span id="confidencePercent">87.4%</span></p>
+    </div>
+  
+    <div class="card">
+      <h3>Prediction Breakdown</h3>
+      <canvas id="pieChart" width="250" height="250"></canvas>
+    </div>
+  </div>
+      <div style="page-break-after: always;"></div>
+
+      <h2 style="text-align:center; margin: 20px 0 10px;">📷 Imaging Evidence</h2>
+
+      <div class="image-pair-box">
+        <div>
+          <h4>Mammogram Image</h4>
+          <img id="mammoImg" src="images/mammo.jpg" alt="Mammogram Image">
+        </div>
+        <div>
+          <h4>Mammogram Heatmap</h4>
+          <img id="mammoHeatmap" src="images/mammo_heatmap.jpg" alt="Mammogram Heatmap">
+        </div>
+      </div>
+
+      <div class="image-pair-box">
+        <div>
+          <h4>Ultrasound Image</h4>
+          <img id="ultraImg" src="images/ultrasound.jpg" alt="Ultrasound Image">
+        </div>
+        <div>
+          <h4>Ultrasound Heatmap</h4>
+          <img id="ultraHeatmap" src="images/ultra_heatmap.jpg" alt="Ultrasound Heatmap">
+        </div>
+      </div>
+
+      <h2 style="text-align:center; margin: 40px 0 20px;">🔍 Prediction Output: Core Deliverables</h2>
+
+      <!-- Fusion Visualization -->
+      <div class="card">
+        <h3>Fusion Layer Visualization</h3>
+        <img src="images/fusion_layer.jpg" alt="Fusion Visualization" style="max-width: 100%; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+      </div>
+
+      <!-- Multi-Modality Performance Comparison -->
+      <div class="card">
+        <h3>Modality Performance Comparison</h3>
+        <canvas id="barChartPerformance" height="300"></canvas>
+      </div>
+
+      <!-- ROC Curve -->
+      <div class="card">
+        <h3>ROC Curve</h3>
+        <canvas id="rocCurve" height="300"></canvas>
+      </div>
+
+      <!-- Precision-Recall Curve -->
+      <div class="card">
+        <h3>Precision-Recall Curve</h3>
+        <canvas id="prCurve" height="300"></canvas>
+      </div>
+
+      <!-- Confusion Matrix -->
+      <div class="card">
+        <h3>Confusion Matrix</h3>
+        <canvas id="confMatrix" height="300"></canvas>
+      </div>
+
+      <!-- Training Curves -->
+      <div class="card">
+        <h3>Training Accuracy / Loss</h3>
+        <canvas id="trainCurves" height="300"></canvas>
+      </div>
+
+      <!-- Class-wise Accuracy -->
+      <div class="card">
+        <h3>Class-wise Accuracy</h3>
+        <canvas id="classwiseAcc" height="300"></canvas>
+      </div>
+
+      <!-- Model Comparison -->
+      <div class="card">
+        <h3>Model Comparison</h3>
+        <canvas id="modelCompare" height="300"></canvas>
+      </div>
+
+      <!-- Feature Importance Heatmaps -->
+      <div class="image-pair-box">
+        <div>
+          <h4>Feature Importance: Mammogram</h4>
+          <img src="images/importance_mammo.jpg" alt="Feature Importance Mammogram">
+        </div>
+        <div>
+          <h4>Feature Importance: Ultrasound</h4>
+          <img src="images/importance_ultrasound.jpg" alt="Feature Importance Ultrasound">
+        </div>
+      </div>
+
+      <!-- Pie Charts -->
+      <div class="result-box">
+        <div class="card">
+          <h3>Prediction Summary</h3>
+          <canvas id="predictionSummary" height="250"></canvas>
+        </div>
+        <div class="card">
+          <h3>Dataset Distribution</h3>
+          <canvas id="datasetPie" height="250"></canvas>
+        </div>
+        <div class="card">
+          <h3>Modality Contribution</h3>
+          <canvas id="modalityPie" height="250"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+    </div>
+
+    <div class="btns no-print">
+      <button class="btn" onclick="window.location.href='upload.html'">🔁 Upload Again</button>
+      <button class="btn" onclick="downloadPDF()">📄 Download Report</button>
+    </div>
+    
+  </div>
+  
+
+  <script>
+      // GSAP Title Animation
+  gsap.from("h1", {
+    y: -50,
+    opacity: 0,
+    duration: 1.2,
+    ease: "power3.out"
+  });
+
+  // Simulated API response
+  const apiResponse = {
+    prediction: "Malignant",
+    confidence: 87.4,
+    classProbs: { Malignant: 87.4, Benign: 12.6 },
+    heatmapPath: "images/brestcancer2.jpg",
+    inputPath: "images/ultrasiund2.jpg",
+    heatmapPath2: "images/brestcancer1.jpg",
+    inputPath2: "images/ultrasiund1.jpg"
+  };
+
+  // Inject dynamic data into DOM
+  document.getElementById('resultLabel').innerText = apiResponse.prediction;
+  document.getElementById('resultLabel').classList.add(apiResponse.prediction.toLowerCase());
+  document.getElementById('confidencePercent').innerText = `${apiResponse.confidence}%`;
+  document.getElementById('reportDate').innerText = new Date().toLocaleDateString();
+  document.getElementById('mammoImg').src = apiResponse.inputPath;
+  document.getElementById('mammoHeatmap').src = apiResponse.heatmapPath;
+  document.getElementById('ultraImg').src = apiResponse.inputPath2;
+  document.getElementById('ultraHeatmap').src = apiResponse.heatmapPath2;
+
+  // Chart: Confidence Doughnut
+  new Chart(document.getElementById('confidenceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Confidence', 'Remaining'],
+      datasets: [{
+        data: [apiResponse.confidence, 100 - apiResponse.confidence],
+        backgroundColor: ['#27ae60', '#ecf0f1'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      cutout: '70%',
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  // Chart: Prediction Breakdown Pie
+  new Chart(document.getElementById('pieChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Malignant', 'Benign'],
+      datasets: [{
+        data: [
+          apiResponse.classProbs.Malignant,
+          apiResponse.classProbs.Benign
+        ],
+        backgroundColor: ['#c0392b', '#2ecc71']
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { boxWidth: 20, padding: 15 }
+        }
+      }
+    }
+  });
+
+  // 📄 Generate PDF after small delay to ensure charts are rendered
+  function downloadPDF() {
+    const content = document.getElementById("pdfContent");
+
+    setTimeout(() => {
+      html2pdf().from(content).set({
+        margin: 0.3,
+        filename: 'CancerNet_Result_Report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      }).save();
+    }, 800); // Wait to avoid blank pages or premature rendering
+  }
+
+
+
+  const severityCard = document.querySelector('.severity-card');
+const diagnosis = apiResponse.prediction.toLowerCase();
+
+if (diagnosis === 'malignant') {
+  severityCard.classList.add('high-risk');
+  severityCard.classList.remove('low-risk');
+} else {
+  severityCard.classList.add('low-risk');
+  severityCard.classList.remove('high-risk');
+  document.querySelector('.severity-label').innerHTML = 'Diagnosis: <strong>Benign</strong>';
+  document.querySelector('.severity-advice').innerText = '✅ No immediate concern. Routine monitoring recommended.';
+  document.querySelector('.severity-card p:nth-child(3)').innerHTML = 'Risk Level: <strong>Low Risk</strong>';
+}
+const ctxBar = document.getElementById('barChartPerformance');
+    new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Mammogram', 'Ultrasound', 'Fusion'],
+        datasets: [
+          { label: 'Accuracy', data: [0.86, 0.82, 0.91], backgroundColor: '#3498db' },
+          { label: 'Precision', data: [0.84, 0.79, 0.89], backgroundColor: '#2ecc71' },
+          { label: 'Recall', data: [0.81, 0.77, 0.92], backgroundColor: '#e67e22' }
+        ]
+      },
+      options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+
+    new Chart(document.getElementById('rocCurve'), {
+      type: 'line',
+      data: { labels: [0, 0.1, 0.2, 0.5, 0.8, 1], datasets: [{ label: 'ROC Curve', data: [0, 0.5, 0.75, 0.88, 0.96, 1], borderColor: '#9b59b6' }] },
+      options: { scales: { x: { title: { display: true, text: '1 - Specificity' } }, y: { title: { display: true, text: 'Sensitivity' } } } }
+    });
+
+    new Chart(document.getElementById('prCurve'), {
+      type: 'line',
+      data: { labels: [0.1, 0.3, 0.5, 0.7, 1], datasets: [{ label: 'PR Curve', data: [0.9, 0.85, 0.83, 0.8, 0.78], borderColor: '#34495e' }] },
+      options: { scales: { x: { title: { display: true, text: 'Recall' } }, y: { title: { display: true, text: 'Precision' } } } }
+    });
+
+    new Chart(document.getElementById('confMatrix'), {
+      type: 'bar',
+      data: {
+        labels: ['TP', 'FP', 'FN', 'TN'],
+        datasets: [{
+          data: [88, 7, 5, 100],
+          backgroundColor: ['#2ecc71', '#e74c3c', '#e67e22', '#3498db']
+        }]
+      },
+      options: { plugins: { legend: { display: false } } }
+    });
+
+    new Chart(document.getElementById('trainCurves'), {
+      type: 'line',
+      data: {
+        labels: [1, 5, 10, 15, 20],
+        datasets: [
+          { label: 'Training Accuracy', data: [0.65, 0.78, 0.83, 0.88, 0.91], borderColor: '#27ae60' },
+          { label: 'Validation Accuracy', data: [0.60, 0.75, 0.81, 0.85, 0.89], borderColor: '#2980b9' },
+          { label: 'Training Loss', data: [1.1, 0.8, 0.5, 0.35, 0.2], borderColor: '#c0392b', borderDash: [5, 5] },
+          { label: 'Validation Loss', data: [1.2, 0.85, 0.55, 0.4, 0.28], borderColor: '#8e44ad', borderDash: [5, 5] }
+        ]
+      },
+      options: { responsive: true }
+    });
+
+    new Chart(document.getElementById('classwiseAcc'), {
+      type: 'bar',
+      data: {
+        labels: ['Benign', 'Malignant'],
+        datasets: [{
+          label: 'Accuracy',
+          data: [0.85, 0.91],
+          backgroundColor: ['#1abc9c', '#e74c3c']
+        }]
+      },
+      options: { responsive: true, plugins: { legend: { display: false } } }
+    });
+
+    new Chart(document.getElementById('modelCompare'), {
+      type: 'bar',
+      data: {
+        labels: ['ResNet', 'VGG', 'MultiMed-CancerNet'],
+        datasets: [
+          { label: 'Accuracy', data: [0.84, 0.81, 0.91], backgroundColor: '#2ecc71' },
+          { label: 'Precision', data: [0.82, 0.78, 0.89], backgroundColor: '#e67e22' },
+          { label: 'Recall', data: [0.79, 0.75, 0.92], backgroundColor: '#3498db' }
+        ]
+      },
+      options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+
+    new Chart(document.getElementById('predictionSummary'), {
+      type: 'pie',
+      data: {
+        labels: ['Malignant', 'Benign'],
+        datasets: [{
+          data: [87.4, 12.6],
+          backgroundColor: ['#c0392b', '#2ecc71']
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('datasetPie'), {
+      type: 'pie',
+      data: {
+        labels: ['Malignant', 'Benign'],
+        datasets: [{
+          data: [58, 42],
+          backgroundColor: ['#e74c3c', '#27ae60']
+        }]
+      }
+    });
+
+    new Chart(document.getElementById('modalityPie'), {
+      type: 'pie',
+      data: {
+        labels: ['Mammogram', 'Ultrasound'],
+        datasets: [{
+          data: [63, 37],
+          backgroundColor: ['#2980b9', '#8e44ad']
+        }]
+      }
+    });
+  </script>
+</body>
+</html>
+<!-- 
+<script>
+  // GSAP Title Animation
+  gsap.from("h1", {
+    y: -50,
+    opacity: 0,
+    duration: 1.2,
+    ease: "power3.out"
+  });
+
+  // Fetch API Data
+  async function fetchPredictionData() {
+    try {
+      const res = await fetch("YOUR_API_ENDPOINT_HERE");
+      const apiResponse = await res.json();
+
+      // Inject dynamic data into DOM
+      document.getElementById('resultLabel').innerText = apiResponse.prediction;
+      document.getElementById('resultLabel').classList.add(apiResponse.prediction.toLowerCase());
+      document.getElementById('confidencePercent').innerText = `${apiResponse.confidence}%`;
+      document.getElementById('reportDate').innerText = new Date().toLocaleDateString();
+      document.getElementById('mammoImg').src = apiResponse.inputPath;
+      document.getElementById('mammoHeatmap').src = apiResponse.heatmapPath;
+      document.getElementById('ultraImg').src = apiResponse.inputPath2;
+      document.getElementById('ultraHeatmap').src = apiResponse.heatmapPath2;
+
+      const diagnosis = apiResponse.prediction.toLowerCase();
+      const severityCard = document.querySelector('.severity-card');
+      if (diagnosis === 'malignant') {
+        severityCard.classList.add('high-risk');
+        severityCard.classList.remove('low-risk');
+      } else {
+        severityCard.classList.add('low-risk');
+        severityCard.classList.remove('high-risk');
+        document.querySelector('.severity-label').innerHTML = 'Diagnosis: <strong>Benign</strong>';
+        document.querySelector('.severity-advice').innerText = '✅ No immediate concern. Routine monitoring recommended.';
+        document.querySelector('.severity-card p:nth-child(3)').innerHTML = 'Risk Level: <strong>Low Risk</strong>';
+      }
+
+      // Charts
+      new Chart(document.getElementById('confidenceChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Confidence', 'Remaining'],
+          datasets: [{
+            data: [apiResponse.confidence, 100 - apiResponse.confidence],
+            backgroundColor: ['#27ae60', '#ecf0f1'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: { legend: { display: false } }
+        }
+      });
+
+      new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+          labels: ['Malignant', 'Benign'],
+          datasets: [{
+            data: [apiResponse.classProbs.Malignant, apiResponse.classProbs.Benign],
+            backgroundColor: ['#c0392b', '#2ecc71']
+          }]
+        },
+        options: {
+          plugins: { legend: { position: 'bottom', labels: { boxWidth: 20, padding: 15 } } }
+        }
+      });
+
+      new Chart(document.getElementById('predictionSummary'), {
+        type: 'pie',
+        data: {
+          labels: ['Malignant', 'Benign'],
+          datasets: [{
+            data: [apiResponse.classProbs.Malignant, apiResponse.classProbs.Benign],
+            backgroundColor: ['#c0392b', '#2ecc71']
+          }]
+        }
+      });
+
+      new Chart(document.getElementById('datasetPie'), {
+        type: 'pie',
+        data: {
+          labels: ['Malignant', 'Benign'],
+          datasets: [{
+            data: apiResponse.datasetDistribution,
+            backgroundColor: ['#e74c3c', '#27ae60']
+          }]
+        }
+      });
+
+      new Chart(document.getElementById('modalityPie'), {
+        type: 'pie',
+        data: {
+          labels: ['Mammogram', 'Ultrasound'],
+          datasets: [{
+            data: apiResponse.modalityContribution,
+            backgroundColor: ['#2980b9', '#8e44ad']
+          }]
+        }
+      });
+    } catch (error) {
+      console.error('API fetch failed:', error);
+    }
+  }
+
+  // Run fetch on DOM load
+  window.addEventListener('DOMContentLoaded', fetchPredictionData);
+
+  // PDF Download
+  function downloadPDF() {
+    const content = document.getElementById("pdfContent");
+    setTimeout(() => {
+      html2pdf().from(content).set({
+        margin: 0.3,
+        filename: 'CancerNet_Result_Report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      }).save();
+    }, 800);
+  }
+</script>
+-->

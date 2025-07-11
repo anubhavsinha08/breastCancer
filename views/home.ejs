@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>home</title>
+    <!-- <link rel="stylesheet" href="home.css"> -->
+    <link rel="stylesheet" href="home1.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Your scrollable content -->
+
+    <div id="nav">
+      <div id="logo">
+        <img src="/public/your-logo.png" alt="Logo" />
+      </div>
+      <i class="ri-menu-line menu-toggle"></i>
+
+      <!-- Desktop Nav Items -->
+      <div id="left_nav">
+        <div id="nav_element">
+          <div class="nav"><a href="#home" style="color: #ed7fa4">home</a></div>
+          <div class="nav"><a href="/upload">upload</a></div>
+          <div class="nav"><a href="/about">about</a></div>
+          <div class="nav"><a href="/learn">learn</a></div>
+        </div>
+      </div>
+      <div id="right_nav">
+        <div id="get_started">
+          <button>
+            <% if (user) { %>
+            <a href="/dashboard">Dashboard</a>
+            <% } else { %>
+            <a href="/login">Login</a>
+            <% } %>
+          </button>
+        </div>
+        <div id="lern_more">
+          <button><% if (user) { %>
+            <a href="/logout">Logout</a>
+            <% }else { %>
+            <a href="/register">Sign-up</a>
+            <% } %></button>
+        </div>
+      </div>
+    </div>
+    <div id="smooth-scroll" data-scroll-container>
+      <div id="paeg1">
+        <!-- Mobile Slide-In Menu -->
+        <div id="mobile-nav">
+          <i class="ri-close-line close-toggle"></i>
+
+          <div class="nav"><a href="#home">home</a></div>
+          <div class="nav"><a href="/upload">upload</a></div>
+          <div class="nav"><a href="/about">about</a></div>
+          <div class="nav"><a href="/learn">learn</a></div>
+
+          <div id="get_started">
+            <button><a href="/upload">get started</a></button>
+          </div>
+          <div id="lern_more">
+            <button><a href="/learn">learn more</a></button>
+          </div>
+        </div>
+
+        <div id="heading">
+          <div id="para">
+            <h2>Revolutionizing Breast Cancer Detection</h2>
+            <p>
+              Experience the power of cutting-edge technology with our dual CNN
+              machine learning model for accurate and early detection of breast
+              cancer.
+            </p>
+          </div>
+          <div id="button">
+            <button id="get"><a href="/upload">get started</a></button>
+            <button id="lern">
+              <a href="/learn">lern more</a>
+            </button>
+          </div>
+        </div>
+
+        <div id="slider">
+          <div id="first-slider">
+            <div class="track">
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1406742648/vector/breast-cancer-awareness-month-and-diverse-ethnic-women-with-pink-support-ribbon.jpg?s=612x612&w=0&k=20&c=AqSgvlhtHXuJ_P7bcMYaFyrHaKJ6zlGaXxvBGsFzqlw="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1660163017/photo/senior-woman-with-pink-ribbon-isolated-on-background-breast-cancer-awareness-month-concept.jpg?s=612x612&w=0&k=20&c=SLN2sxF8rd8v8upV_dP5-3B19oYnt2n5oGQL2AWpnNU="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/187096904/photo/group-of-women-wearing-pink.jpg?s=612x612&w=0&k=20&c=kJ-ctnrcluiJQdv6NJtqCVuLXo8rBys9dHTg_nPoUBM="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1497995783/photo/beautiful-mother-and-daughter-wear-pink-ribbons-while-attending-breast-cancer-awareness.jpg?s=612x612&w=0&k=20&c=T-nI2pLNKvseS3Ds1v3IqJSpwfWmYEUumyhKMuTe8B0="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1415035594/photo/schedule-mammogram.jpg?s=612x612&w=0&k=20&c=LrvLAwmbHWUlu6cbVFsiQlqoQmK2xwK-E_XyDZIhNMw="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1446544483/photo/beautiful-young-woman-has-pink-ribbon-pinned-to-her-denim-jacket-while-attending-a-breast.jpg?s=612x612&w=0&k=20&c=nxmYGkMa_wZgXtgrA12QvHD4nFex2IUMNZesqw_jtPY="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1405094679/vector/breast-cancer-awareness-month.jpg?s=612x612&w=0&k=20&c=5HfLpw_PHPty99vpd_1mlbb1LUs6UGyMQokftzRHcBQ="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/2164419616/photo/cropped-hands-of-woman-holding-breast-cancer-awareness-ribbon.jpg?s=612x612&w=0&k=20&c=igpKX0mS292z6XvYKNU-0Pv4nY3K0kGVBUGRJ9nq0JI="
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+          <div id="second-slider">
+            <div class="track">
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/160634601/photo/cancer-awareness-ribbon-and-stethoscope.jpg?s=612x612&w=0&k=20&c=s_oexAU6YHvNSe9QZOhNzZDSxhtFQSfEF6GsmP65gAg="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1093329950/photo/young-woman-having-a-mammography.jpg?s=612x612&w=0&k=20&c=BujnMkx3kwoZsQim-OaGDTH2N-p6zUFT0pr9Je0XY5g="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1416732214/vector/pink-ribbon.jpg?s=612x612&w=0&k=20&c=p74SciICqvtfM-9eZnP7ESTXgo1JjMbqIOlTLpy8pYA="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1405986460/vector/breast-cancer-awareness-and-support-concept-different-nationalities-of-women-with-pink.jpg?s=612x612&w=0&k=20&c=i5oFaNMnD2srcaKyp-Sj6KJ3I6lZrrMJ1Xwnqi3t7bM="
+                  alt=""
+                />
+              </div>
+
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/482855207/vector/pink-ribbon-background.jpg?s=612x612&w=0&k=20&c=lulLEdNfi7uYy_qa11khnQmZUnrh4CgLm75NpU5L8kE="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/828521462/photo/group-of-ladies-cheering.jpg?s=612x612&w=0&k=20&c=REu2bmczJUX9TktIb_DKRGtL8shkHCbj1w7swDJAChc="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/895735764/photo/woman-against-breast-cancer.jpg?s=612x612&w=0&k=20&c=wbjvzjT4eW6BoBXWIy5cHmAeoJR_WU0XPINAYmAOYUk="
+                  alt=""
+                />
+              </div>
+              <div class="img">
+                <img
+                  src="https://media.istockphoto.com/id/1419247337/vector/breast-cancer-awareness-month-banner.jpg?s=612x612&w=0&k=20&c=6TgOd-pmA0ut92AwtrWRVo9J7eRkHaYeWCrSQHioRzE="
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="about">
+          <div id="left-about">
+            <img
+              id="img1"
+              src="https://media.istockphoto.com/id/1200812303/photo/doctor-is-working-with-mammography-x-ray-scanner-in-hospital.jpg?s=612x612&w=0&k=20&c=D9a3Kn6MhBE4WqTauvwctfEu8PG9f2tnbZWhSWgH1h0="
+              alt=""
+            />
+            <img
+              id="img2"
+              src="https://media.istockphoto.com/id/1937349524/photo/ai-medical-bot-diagnosing-breast-cancer-mammogram.jpg?s=612x612&w=0&k=20&c=GV2qaXLpi8Psz_NUCSPh233OiPCIEOxJCDpuAU3uYtc="
+              alt=""
+            />
+            <img
+              id="img3"
+              src="https://media.istockphoto.com/id/1725157576/photo/female-doctor-examines-results-of-mammography-on-computer.jpg?s=612x612&w=0&k=20&c=BE65Pug58Q9OnJw_5L-szyweMwB5cOGU7RyoeDWAb3g="
+              alt=""
+            />
+            <div id="border-indicator"></div>
+          </div>
+          <div id="right-about">
+            <div class="about" id="first">
+              <h2>Key Features of MultiMed-CancerNet</h2>
+              <p>Experience unparalleled accuracy with AI-driven detection.</p>
+            </div>
+            <div class="about" id="second">
+              <h2>Explainable AI Results for Informed Decisions</h2>
+              <p>Our results are transparent, ensuring trust and clarity.</p>
+            </div>
+            <div class="about" id="third">
+              <h2>Dual CNN Analysis for Enhanced Accuracy</h2>
+              <p>Utilizing dual CNNs, we maximize detection precision.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="motive">
+          <div id="main-motive">
+            <h1>Join us in the fight against breast cancer</h1>
+            <p>
+              Learn more about our innovative breast cancer detection web app
+              powered by dual CNN machine learning model.
+            </p>
+          </div>
+        </div>
+
+        <div id="image_div">
+          <div class="small_div">
+            <img
+              src="https://media.istockphoto.com/id/2170418642/vector/all-nations-fighting-against-breast-cancer.jpg?s=612x612&w=0&k=20&c=y-LD2boeMpPRPo9VehktPwOTMbtEGWzInxsQqnFYlh4="
+              alt=""
+            />
+            <div class="description">
+              <p>
+                🎗️ Early detection saves lives. Regular checkups are a powerful
+                defense.
+              </p>
+            </div>
+          </div>
+
+          <div class="small_div">
+            <img
+              src="https://media.istockphoto.com/id/1650166077/photo/fighting-against-breast-cancer-concept.jpg?s=612x612&w=0&k=20&c=KHt2GcXtDqNncLFo7l2HW4QF4wRabyG-HLA4MoHLQL4="
+              alt=""
+            />
+            <div class="description">
+              <p>
+                👩‍⚕️ Awareness is strength. Learn the signs, talk to your doctor,
+                and stay informed.
+              </p>
+            </div>
+          </div>
+
+          <div class="small_div">
+            <img
+              src="https://media.istockphoto.com/id/1263557730/vector/three-women-with-pink-ribbons-of-different-nationalities-standing-together-breast-cancer.jpg?s=612x612&w=0&k=20&c=9NKtDTIpOPDN6rhQrUsSu71AgdEQBCS2AZ-0zb2iA_E="
+              alt=""
+            />
+            <div class="description">
+              <p>
+                💖 Every woman’s story matters. Support, love, and community
+                build hope.
+              </p>
+            </div>
+          </div>
+
+          <div class="small_div">
+            <img
+              src="https://media.istockphoto.com/id/1423703848/vector/flag-of-breast-cancer-awareness.jpg?s=612x612&w=0&k=20&c=hceZZpEUmiQN-AV5h_B9xYQbhpsWdf-jfmj1xYh4nHw="
+              alt=""
+            />
+            <div class="description">
+              <p>
+                🌸 Research and innovation bring us closer to a cure every day.
+                Stand with science.
+              </p>
+            </div>
+          </div>
+
+          <div class="small_div">
+            <img
+              src="https://media.istockphoto.com/id/1413593238/photo/breast-cancer-awareness-concept-top-view-photo-of-pink-silk-ribbon-and-stethoscope-on.jpg?s=612x612&w=0&k=20&c=5Wja4c_TsT7kjFqEfiYc_me2GmOY34p8pt4NdUpbz5E="
+              alt=""
+            />
+            <div class="description">
+              <p>
+                🌍 Join the movement. Share awareness, wear pink, and empower
+                others globally.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div id="step">
+          <div id="left-text">
+            <h1>Discover the Power of Our Products</h1>
+            <p>
+              Our dual-path CNN model analyzes both mammogram and ultrasound
+              images with precision. This advanced AI architecture enhances
+              diagnostic accuracy, supports early detection, and empowers
+              healthcare providers with rapid, reliable insights—helping improve
+              patient outcomes and save lives through technology that is both
+              efficient and clinically effective.
+            </p>
+          </div>
+
+          <div id="right-text">
+            <div class="all-step" id="one-step">
+              <div class="upper">
+                <h1>Sign Up</h1>
+                <h3>01</h3>
+              </div>
+              <div class="lower">
+                <p>
+                  Create an account to access the breast cancer detection web
+                  app
+                </p>
+              </div>
+            </div>
+            <div class="all-step" id="two-step">
+              <div class="upper">
+                <h1>Upload Images</h1>
+                <h3>02</h3>
+              </div>
+              <div class="lower">
+                <p>
+                  Upload mammogram images for analysis using our dual CNN
+                  machine learning model.
+                </p>
+              </div>
+            </div>
+            <div class="all-step" id="three-step">
+              <div class="upper">
+                <h1>View Results</h1>
+                <h3>03</h3>
+              </div>
+              <div class="lower">
+                <p>
+                  Receive detailed reports and insights on the likelihood of
+                  breast cancer detection..
+                </p>
+              </div>
+            </div>
+            <div class="all-step" id="four-step">
+              <div class="upper">
+                <h1>Take Action</h1>
+                <h3>04</h3>
+              </div>
+              <div class="lower">
+                <p>
+                  Consult with healthcare professionals for further evaluation
+                  and treatment options.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="div">
+          <div id="customer-heading">
+            <h1>customer testimonial</h1>
+            <p>MultiMed-CancerNet transformed our diagnostic process.</p>
+          </div>
+          <div id="customer">
+            <div class="person" id="first-person">
+              <h4>
+                "The accuracy of detection has <br />significantly improved!"
+              </h4>
+              <div id="customer-img">
+                <img
+                  src="https://plus.unsplash.com/premium_photo-1689539137236-b68e436248de?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHByb2ZpbGUlMjBpbWFnZXxlbnwwfHwwfHx8MA%3D%3D"
+                  alt=""
+                />
+              </div>
+              <h5>ayan pal</h5>
+              <p>Oncologist, City Hospital</p>
+            </div>
+            <div class="person" id="second-person">
+              <h4>
+                "A game changer for patient<br />
+                care and outcomes!"
+              </h4>
+              <div id="customer-img">
+                <img
+                  src="https://media.istockphoto.com/id/1300972574/photo/millennial-male-team-leader-organize-virtual-workshop-with-employees-online.webp?a=1&b=1&s=612x612&w=0&k=20&c=zrbUynu9yxsQtWT1n5G9-GTyJZs11xhG3apO_e_2x5U="
+                  alt=""
+                />
+              </div>
+              <h5>avubhav sinha</h5>
+              <p>Admin, Health Center</p>
+            </div>
+            <div class="person" id="third-person">
+              <h4>
+                ""The insights provided are invaluable,<br />
+                for research!"
+              </h4>
+              <div id="customer-img">
+                <img
+                  src="https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZSUyMGltYWdlfGVufDB8fDB8fHww"
+                  alt=""
+                />
+              </div>
+              <h5>abdush salam</h5>
+              <p>Researcher, University</p>
+            </div>
+            <div class="person" id="forth-person">
+              <h4>
+                "I'm truly impressed by how<br />
+                accurate and fast the results are!"
+              </h4>
+              <div id="customer-img">
+                <img
+                  src="https://plus.unsplash.com/premium_photo-1661683653197-ca2d0aab80eb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8ODl8fHByb2ZpbGUlMjBpbWFnZXxlbnwwfHwwfHx8MA%3D%3D"
+                  alt=""
+                />
+              </div>
+              <h5>ranjika pal</h5>
+              <p>patient,user</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="accuracy-section">
+          <div class="accuracy-content">
+            <h5>Precision</h5>
+            <h2>Unmatched Accuracy in<br />Cancer Detection</h2>
+            <p>
+              Our AI models are designed to deliver exceptional accuracy in
+              detecting breast cancer. With a focus on reliability, we ensure
+              that our technology supports healthcare professionals in making
+              informed decisions.
+            </p>
+
+            <div class="accuracy-stats">
+              <div class="stat">
+                <h3>95%</h3>
+                <p>Proven results that you can trust.</p>
+              </div>
+              <div class="stat">
+                <h3>98%</h3>
+                <p>Empowering doctors with reliable AI insights.</p>
+              </div>
+            </div>
+
+            <div class="accuracy-buttons">
+              <button class="primary-btn" onclick="window.location.href='/learn'">Learn More</button>
+              <!-- <button class="text-btn" onclick="window.location.href='/register'">Sign Up →</button> -->
+            </div>
+          </div>
+
+          <div class="accuracy-image">
+            <img
+              src="https://media.istockphoto.com/id/1187651665/photo/doctor-examining-breasts-with-mammogram.jpg?s=612x612&w=0&k=20&c=6vORM0s2jTdwZx3C6n7YWzjJBeNATTMFuSCiq4FYAbs="
+              alt=""
+            />
+          </div>
+        </section>
+
+        <section class="performance-section">
+          <div class="performance-content">
+            <p class="tag">Accuracy</p>
+            <h2>
+              Exceptional Performance<br />
+              in Cancer Detection
+            </h2>
+            <p class="description1">
+              Our platform boasts a detection accuracy rate of over 95%. Users
+              experience rapid analysis, providing timely results for better
+              decision-making.
+            </p>
+
+            <div class="stats">
+              <div class="stat-box">
+                <h3>95%</h3>
+                <p>Leading the industry in accuracy and reliability.</p>
+              </div>
+              <div class="stat-box">
+                <h3>Speed</h3>
+                <p>Results delivered in under 10 minutes on average.</p>
+              </div>
+            </div>
+
+            <div class="cta-buttons">
+              <button class="btn-primary" onclick="window.location.href='/learn'">Learn More</button>
+              <!-- <button class="btn-text" onclick="window.location.href='/register'">Sign Up <span>&rarr;</span></button> -->
+            </div>
+          </div>
+
+          <div class="performance-video">
+            <div class="video-thumbnail">
+              <video muted loop autoplay playsinline>
+                <source
+                  src="https://kstatic.googleusercontent.com/files/5d7e94bfaaea6baa54e37761620b9b8561a854f73742969e4fe79efb1ecdc9ababc215f09531a0f54d04a91669b1ae3ea6715df17379056f957dd4b4ba059fe6"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer>
+        <div class="footer-container">
+          <div class="footer-section newsletter">
+            <h2 class="logo">Logo</h2>
+            <p>
+              Subscribe to our newsletter for the latest features and updates.
+            </p>
+            <form>
+              <input type="email" placeholder="Your Email Here" required />
+              <button type="submit">Join</button>
+            </form>
+            <small
+              >By subscribing, you consent to our
+              <a href="#">Privacy Policy</a> and receive updates.</small
+            >
+          </div>
+
+          <div class="footer-section links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#">Home Page</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Blog Posts</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section resources">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Feedback</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Events</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section social">
+            <h4>Connect With Us</h4>
+            <ul>
+              <li>
+                <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-x-twitter"></i> X</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+              </li>
+              <li>
+                <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="footer-bottom">
+          <p>© 2025 MultiMed-CancerNet. All rights reserved.</p>
+          <div class="footer-policy-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Settings</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+      integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+      integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <script src="home1.js"></script>
+  </body>
+</html>

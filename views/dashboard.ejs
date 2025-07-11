@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Dashboard | MultiMed-CancerNet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0; padding: 0; background: #f0fdf4;
+      color: #1f2937;
+    }
+    .nav-header {
+      background: #fff; border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      /* sticky: top; */
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-content {
+      max-width: 1200px; margin: auto;
+      padding: 1rem 2rem; display: flex;
+      justify-content: space-between; align-items: center;
+    }
+    .nav-title { font-size: 1.5rem; font-weight: 700; }
+    .logout-btn {
+      background: #ef4444; color: #fff; border: none;
+      padding: .5rem 1rem; border-radius: .5rem;
+      cursor: pointer; font-weight: 600;
+      transition: "background" .3s;
+    }
+    .logout-btn:hover { background: #dc2626; }
+    .container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+    .page-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: #fff; border-radius: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeInUp .5s forwards;
+    }
+    .card:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    .card-header {
+      display:flex; align-items:center; gap:.5rem;
+      padding: 1rem;
+    }
+    .card-title { font-size:1.25rem; font-weight:600; }
+    .info-list {
+      list-style:none; padding:0 1rem 1rem;
+    }
+    .info-list li { margin-bottom:.5rem; }
+    .label { font-weight:600; color:#374151; }
+    .chart-container {
+      position: relative; padding:1rem;
+    }
+    canvas { max-width:100%; height: auto; }
+    .history-list { list-style:none; padding:1rem; margin:0; max-height:200px; overflow-y:auto; }
+    .history-item { margin-bottom:.5rem; padding:.5rem; border-left:3px solid #2563eb; background:#f9fafb; border-radius:.25rem; cursor:pointer; transition:background .2s; }
+    .history-item:hover { background:#eef6ff; }
+    .expandable .item-details { display:none; padding:.5rem 1rem; font-size:.9rem; color:#4b5563; border-top:1px solid #e5e7eb; }
+    .expandable.opened .item-details { display:block; }
+    .btn-primary { background:#2563eb; color:white; border:none;
+      padding:.75rem 1.5rem; border-radius:.75rem;
+      font-weight:600; cursor:pointer; transition:background .2s; display:block; margin:1rem auto; }
+    .btn-primary:hover { background:#1d4ed8; }
+    @keyframes fadeInUp {
+      to { opacity:1; transform:translateY(0); }
+    }
+    @media(max-width:768px) {
+      .nav-content { flex-direction:column; gap:.5rem; }
+      .container { padding:0 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-header"><div class="nav-content">
+      <h1 class="nav-title">MultiMed-CancerNet</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+  </div></header>
+  <main class="container">
+    <h2 class="page-title">Hi, <span id="user-name"><%= user.name %></span> 👋</h2>
+    <div class="grid-3">
+      <div class="card" style="animation-delay:.1s">
+        <div class="card-header"><i data-lucide="user"></i><span class="card-title">Profile</span></div>
+        <ul class="info-list" id="profile-info"></ul>
+      </div>
+
+      <div class="card" style="animation-delay:.2s">
+        <div class="card-header"><i data-lucide="file-bar-chart"></i><span class="card-title">Latest Report</span></div>
+        <ul class="info-list" id="latest-report"></ul>
+        <button class="btn-primary" onclick="location.href='/upload'">Upload New Data</button>
+      </div>
+
+      <div class="card" style="animation-delay:.3s">
+        <div class="card-header"><i data-lucide="calculator"></i><span class="card-title">Stats</span></div>
+        <ul class="info-list" id="stats-info">
+          <li><span class="label">Total Scans:</span> <span id="total-scans">0</span></li>
+          <li><span class="label">Avg. Confidence:</span> <span id="avg-confidence">0%</span></li>
+        </ul>
+      </div>
+
+      <div class="card" style="animation-delay:.4s">
+        <div class="card-header"><i data-lucide="clock-2"></i><span class="card-title">History</span></div>
+        <ul class="history-list" id="history-list"></ul>
+      </div>
+
+      <div class="card" style="animation-delay:.5s">
+        <div class="card-header"><i data-lucide="bar-chart-3"></i><span class="card-title">Confidence Over Time</span></div>
+        <div class="chart-container"><canvas id="confidenceChart"></canvas></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      // Sample data (replace with fetch from /api/dashboard)
+      // const user = { name:"Anubhav", email:"anubhav@example.com", age:19, gender:"Male" };
+      const reports = [
+        { id:1, diagnosis:"Benign", confidence:91.5, date:"2025-07-06", notes:"Normal follow-up." },
+        { id:2, diagnosis:"Benign", confidence:89.3, date:"2025-05-15", notes:"Routine check." },
+        { id:3, diagnosis:"Malignant", confidence:95.8, date:"2024-12-22", notes:"Recommend biopsy." }
+      ];
+
+      document.getElementById("user-name").textContent = user.name;
+      document.getElementById("profile-info").innerHTML = `
+        <li><span class="label">Email:</span> ${user.email}</li>
+        <li><span class="label">Age:</span> ${user.age}</li>
+        <li><span class="label">Gender:</span> ${user.gender}</li>
+      `;
+
+      const latest = reports[0];
+      document.getElementById("latest-report").innerHTML = `
+        <li><span class="label">Diagnosis:</span> ${latest.diagnosis}</li>
+        <li><span class="label">Confidence:</span> ${latest.confidence}%</li>
+        <li><span class="label">Date:</span> ${latest.date}</li>
+      `;
+
+      document.getElementById("total-scans").textContent = reports.length;
+      const avg = (reports.reduce((sum,r)=>sum+r.confidence,0)/reports.length).toFixed(1);
+      document.getElementById("avg-confidence").textContent = avg + "%";
+
+      const historyList = document.getElementById("history-list");
+      reports.forEach(r => {
+        const li = document.createElement("li");
+        li.className = "history-item expandable";
+        li.innerHTML = `
+          <div><strong>${r.date}</strong> – ${r.diagnosis} (${r.confidence}%)</div>
+          <div class="item-details">${r.notes}</div>
+        `;
+        li.addEventListener("click", () => li.classList.toggle("opened"));
+        historyList.append(li);
+      });
+
+      // Chart
+      const ctx = document.getElementById("confidenceChart").getContext("2d");
+      new Chart(ctx, {
+        type:'line',
+        data:{
+          labels: reports.map(r => r.date),
+          datasets:[{
+            label:'Confidence (%)',
+            data: reports.map(r => r.confidence),
+            borderColor:'#2563eb',
+            backgroundColor:'rgba(37,99,235,0.2)',
+            fill:true,
+            tension:0.3
+          }]
+        },
+        options:{
+          scales:{ y:{ beginAtZero:true, max:100 } },
+          plugins:{ legend:{ display:false } }
+        }
+      });
+    });
+
+    function logout() {
+      alert("Logged out!");
+      window.location.href = "/logout";
+    }
+  </script>
+</body>
+</html>
