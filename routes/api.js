@@ -61,8 +61,4 @@ router.get("/api/logout", (req, res) => {
 });
 
 
-// result
-
-
-
 module.exports = router;

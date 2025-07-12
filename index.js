@@ -4,6 +4,7 @@ const session = require("express-session");
 const authRoutes = require("./routes/auth");
 const db = require("./db");
 const fs = require("fs");
+const resultRoutes = require("./routes/result");  // adjust path
 // const path = require("path");
 
 const app = express();
@@ -20,6 +21,9 @@ app.set("views", path.join(__dirname, "views"));
 // Serve static files
 app.use(express.static(path.join(__dirname, "public")));
 const uploadPath = path.join(__dirname, "public", "uploads");
+app.use("/uploads", express.static("public/uploads"));  // ✅ necessary for serving images
+app.use("/", resultRoutes);
+
 
 // Express-session setup
 app.use(
@@ -71,7 +75,6 @@ app.get("/upload", isAuthenticated, (req, res) => {
 app.get("/result", isAuthenticated, (req, res) => {
   res.render("result");
 });
-
 
 
 // get request to auth routes
