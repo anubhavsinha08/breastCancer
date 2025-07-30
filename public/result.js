@@ -8,9 +8,9 @@ const mockData = {
         gender: "Female",
         reportDate: new Date().toLocaleString()
     },
-    
-    aiSummary: "Based on comprehensive multi-modal analysis combining mammography, ultrasound, and fusion imaging techniques, our AI system has identified suspicious characteristics consistent with malignant tissue. The tumor presents with irregular margins, heterogeneous echo patterns, and microcalcifications typical of invasive ductal carcinoma. Confidence metrics indicate high certainty in malignant classification with supporting evidence from all imaging modalities.",
-    
+
+    //aiSummary: "Based on comprehensive multi-modal analysis combining mammography, ultrasound, and fusion imaging techniques, our AI system has identified suspicious characteristics consistent with malignant tissue. The tumor presents with irregular margins, heterogeneous echo patterns, and microcalcifications typical of invasive ductal carcinoma. Confidence metrics indicate high certainty in malignant classification with supporting evidence from all imaging modalities.",
+
     parameters: [
         { parameter: "Tumor Size", value: "2.3 cm", status: "elevated" },
         { parameter: "BI-RADS Category", value: "5", status: "critical" },
@@ -19,7 +19,7 @@ const mockData = {
         { parameter: "Shape", value: "Irregular", status: "critical" },
         { parameter: "Orientation", value: "Non-parallel", status: "elevated" }
     ],
-    
+
     observations: [
         { feature: "Margins", finding: "Spiculated", significance: "High" },
         { feature: "Echo Pattern", finding: "Heterogeneous", significance: "Medium" },
@@ -28,7 +28,7 @@ const mockData = {
         { feature: "Doppler Flow", finding: "Increased vascularity", significance: "High" },
         { feature: "Skin Changes", finding: "None detected", significance: "Low" }
     ],
-    
+
     assessment: {
         prediction: "Malignant",
         riskLevel: "High",
@@ -36,28 +36,28 @@ const mockData = {
         recommendation: "Immediate biopsy and oncology consultation recommended"
     }
 };
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     lucide.createIcons();
     loadPatientData();
     loadTables();
     loadAssessment();
 
     initializeCharts();
-    
+
 
     updatePageState();
 });
 
 function showPage(pageNum) {
     currentPage = pageNum;
-    
+
 
     document.getElementById('page1').classList.add('hidden');
     document.getElementById('page2').classList.add('hidden');
-    
+
 
     document.getElementById(`page${pageNum}`).classList.remove('hidden');
-    
+
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`page${pageNum}-btn`).classList.add('active');
 
@@ -87,7 +87,7 @@ function updatePageState() {
 
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    
+
     prevBtn.disabled = currentPage === 1;
     nextBtn.disabled = currentPage === 2;
 }
@@ -105,7 +105,7 @@ function loadTables() {
 
     const parametersTable = document.getElementById('parameters-table');
     parametersTable.innerHTML = '';
-    
+
     mockData.parameters.forEach(param => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -119,10 +119,10 @@ function loadTables() {
         `;
         parametersTable.appendChild(row);
     });
-    
+
     const observationsTable = document.getElementById('observations-table');
     observationsTable.innerHTML = '';
-    
+
     mockData.observations.forEach(obs => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -166,10 +166,10 @@ function drawConfidenceChart() {
     const centerY = canvas.height / 2;
     const radius = 70;
     const confidence = mockData.assessment.confidence;
-    
+
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
     ctx.strokeStyle = '#e5e7eb';
@@ -177,7 +177,7 @@ function drawConfidenceChart() {
     ctx.stroke();
     const startAngle = -Math.PI / 2;
     const endAngle = startAngle + (2 * Math.PI * confidence / 100);
-    
+
     ctx.beginPath();
     ctx.arc(centerX, centerY, radius, startAngle, endAngle);
     ctx.strokeStyle = '#3b82f6';
@@ -188,7 +188,7 @@ function drawConfidenceChart() {
     ctx.font = 'bold 24px Poppins';
     ctx.textAlign = 'center';
     ctx.fillText(`${confidence}%`, centerX, centerY + 8);
-    
+
     ctx.font = '12px Poppins';
     ctx.fillStyle = '#6b7280';
     ctx.fillText('AI Confidence', centerX, centerY + 35);
@@ -200,16 +200,16 @@ function drawPredictionChart() {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = 60;
-    
+
     const data = [
         { label: 'Malignant', value: 94.2, color: '#ef4444' },
         { label: 'Benign', value: 5.8, color: '#10b981' }
     ];
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     let currentAngle = -Math.PI / 2;
-    
+
     data.forEach(item => {
         const sliceAngle = (item.value / 100) * 2 * Math.PI;
         ctx.beginPath();
@@ -218,14 +218,14 @@ function drawPredictionChart() {
         ctx.closePath();
         ctx.fillStyle = item.color;
         ctx.fill();
-        
+
         currentAngle += sliceAngle;
     });
     let legendY = canvas.height - 60;
     data.forEach(item => {
         ctx.fillStyle = item.color;
         ctx.fillRect(centerX - 60, legendY, 12, 12);
-   
+
         ctx.fillStyle = '#6b7280';
         ctx.font = '12px Poppins';
         ctx.textAlign = 'left';
@@ -237,14 +237,14 @@ function drawPredictionChart() {
 function drawModalityChart() {
     const canvas = document.getElementById('modality-chart');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     const data = [
         { label: 'Mammography', value: 87.5 },
         { label: 'Ultrasound', value: 91.2 },
         { label: 'Fusion', value: 94.2 }
     ];
-    
+
     const barHeight = 40;
     const barSpacing = 60;
     const maxValue = Math.max(...data.map(d => d.value));
@@ -252,7 +252,7 @@ function drawModalityChart() {
     const startX = 150;
     const startY = 50;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     data.forEach((item, index) => {
         const y = startY + index * barSpacing;
         const barWidth = (item.value / maxValue) * chartWidth;
@@ -261,15 +261,15 @@ function drawModalityChart() {
         ctx.font = '14px Poppins';
         ctx.textAlign = 'right';
         ctx.fillText(item.label, startX - 10, y + barHeight / 2 + 5);
-        
+
 
         ctx.fillStyle = '#e5e7eb';
         ctx.fillRect(startX, y, chartWidth, barHeight);
-        
+
 
         ctx.fillStyle = '#3b82f6';
         ctx.fillRect(startX, y, barWidth, barHeight);
-        
+
         // Draw value
         ctx.fillStyle = 'white';
         ctx.font = 'bold 12px Poppins';
@@ -281,12 +281,12 @@ function drawModalityChart() {
 function drawROCChart() {
     const canvas = document.getElementById('roc-chart');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     const padding = 40;
     const chartWidth = canvas.width - 2 * padding;
     const chartHeight = canvas.height - 2 * padding;
-    
+
 
     const rocData = [];
     for (let i = 0; i <= 20; i++) {
@@ -294,10 +294,10 @@ function drawROCChart() {
         const tpr = Math.min(1, fpr + 0.3 + Math.random() * 0.4);
         rocData.push({ fpr, tpr });
     }
-    
+
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
 
     ctx.strokeStyle = '#e5e7eb';
     ctx.lineWidth = 1;
@@ -306,7 +306,7 @@ function drawROCChart() {
     ctx.lineTo(padding, canvas.height - padding);
     ctx.lineTo(canvas.width - padding, canvas.height - padding);
     ctx.stroke();
-    
+
 
     ctx.strokeStyle = '#9ca3af';
     ctx.setLineDash([5, 5]);
@@ -315,37 +315,37 @@ function drawROCChart() {
     ctx.lineTo(canvas.width - padding, padding);
     ctx.stroke();
     ctx.setLineDash([]);
-    
+
 
     ctx.strokeStyle = '#3b82f6';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    
+
     rocData.forEach((point, index) => {
         const x = padding + point.fpr * chartWidth;
         const y = canvas.height - padding - point.tpr * chartHeight;
-        
+
         if (index === 0) {
             ctx.moveTo(x, y);
         } else {
             ctx.lineTo(x, y);
         }
     });
-    
+
     ctx.stroke();
-    
+
 
     ctx.fillStyle = '#6b7280';
     ctx.font = '12px Poppins';
     ctx.textAlign = 'center';
     ctx.fillText('False Positive Rate', canvas.width / 2, canvas.height - 10);
-    
+
     ctx.save();
     ctx.translate(15, canvas.height / 2);
     ctx.rotate(-Math.PI / 2);
     ctx.fillText('True Positive Rate', 0, 0);
     ctx.restore();
-    
+
 
     ctx.textAlign = 'center';
     ctx.fillText('AUC = 0.947', canvas.width / 2, canvas.height - 25);
@@ -354,16 +354,16 @@ function drawROCChart() {
 function drawConfusionMatrix() {
     const container = document.getElementById('confusion-matrix');
     if (!container) return;
-    
+
     const matrix = {
         truePositive: 142,
         falsePositive: 8,
         trueNegative: 156,
         falseNegative: 6
     };
-    
+
     const total = matrix.truePositive + matrix.falsePositive + matrix.trueNegative + matrix.falseNegative;
-    
+
     container.innerHTML = `
         <div class="matrix-cell" style="background-color: rgba(34, 197, 94, ${Math.max(0.3, matrix.truePositive / total)});">
             <div class="value">${matrix.truePositive}</div>
@@ -392,9 +392,9 @@ function drawConfusionMatrix() {
 function drawAccuracyChart() {
     const canvas = document.getElementById('accuracy-chart');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
-    
+
 
     const epochs = 10;
     const accuracyData = [];
@@ -404,16 +404,16 @@ function drawAccuracyChart() {
             value: 0.65 + (0.29 * (i / epochs)) + Math.random() * 0.05
         });
     }
-    
+
     drawLineChart(ctx, canvas, accuracyData, '#10b981', 'Training Accuracy');
 }
 
 function drawLossChart() {
     const canvas = document.getElementById('loss-chart');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
-    
+
 
     const epochs = 10;
     const lossData = [];
@@ -423,50 +423,50 @@ function drawLossChart() {
             value: 0.85 - (0.7 * (i / epochs)) + Math.random() * 0.05
         });
     }
-    
+
     drawLineChart(ctx, canvas, lossData, '#ef4444', 'Training Loss');
 }
 
 function drawClassAccuracyChart() {
     const canvas = document.getElementById('class-accuracy-chart');
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     const data = [
         { label: 'Benign', value: 96.1 },
         { label: 'Malignant', value: 94.2 },
         { label: 'Normal', value: 98.3 }
     ];
-    
+
     const barHeight = 40;
     const barSpacing = 80;
     const maxValue = Math.max(...data.map(d => d.value));
     const chartWidth = canvas.width - 200;
     const startX = 120;
     const startY = 50;
-    
+
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     data.forEach((item, index) => {
         const y = startY + index * barSpacing;
         const barWidth = (item.value / maxValue) * chartWidth;
-        
+
 
         ctx.fillStyle = '#374151';
         ctx.font = '14px Poppins';
         ctx.textAlign = 'right';
         ctx.fillText(item.label, startX - 10, y + barHeight / 2 + 5);
-        
-  
+
+
         ctx.fillStyle = '#e5e7eb';
         ctx.fillRect(startX, y, chartWidth, barHeight);
-        
+
 
         ctx.fillStyle = '#8b5cf6';
         ctx.fillRect(startX, y, barWidth, barHeight);
-        
-    
+
+
         ctx.fillStyle = 'white';
         ctx.font = 'bold 12px Poppins';
         ctx.textAlign = 'center';
@@ -478,13 +478,13 @@ function drawLineChart(ctx, canvas, data, color, label) {
     const padding = 40;
     const chartWidth = canvas.width - 2 * padding;
     const chartHeight = canvas.height - 2 * padding - 40; // Extra space for labels
-    
+
     const maxValue = Math.max(...data.map(d => d.value));
     const minValue = Math.min(...data.map(d => d.value));
     const valueRange = maxValue - minValue;
-    
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
 
     ctx.strokeStyle = '#f3f4f6';
     ctx.lineWidth = 1;
@@ -495,7 +495,7 @@ function drawLineChart(ctx, canvas, data, color, label) {
         ctx.lineTo(canvas.width - padding, y);
         ctx.stroke();
     }
-    
+
 
     ctx.strokeStyle = '#e5e7eb';
     ctx.lineWidth = 2;
@@ -504,36 +504,36 @@ function drawLineChart(ctx, canvas, data, color, label) {
     ctx.lineTo(padding, canvas.height - padding - 20);
     ctx.lineTo(canvas.width - padding, canvas.height - padding - 20);
     ctx.stroke();
-    
-   
+
+
     ctx.strokeStyle = color;
     ctx.lineWidth = 3;
     ctx.beginPath();
-    
+
     data.forEach((point, index) => {
         const x = padding + (index / (data.length - 1)) * chartWidth;
         const y = padding + chartHeight - ((point.value - minValue) / valueRange) * chartHeight;
-        
+
         if (index === 0) {
             ctx.moveTo(x, y);
         } else {
             ctx.lineTo(x, y);
         }
     });
-    
+
     ctx.stroke();
-    
+
 
     ctx.fillStyle = color;
     data.forEach((point, index) => {
         const x = padding + (index / (data.length - 1)) * chartWidth;
         const y = padding + chartHeight - ((point.value - minValue) / valueRange) * chartHeight;
-        
+
         ctx.beginPath();
         ctx.arc(x, y, 4, 0, 2 * Math.PI);
         ctx.fill();
     });
-    
+
 
     ctx.fillStyle = '#6b7280';
     ctx.font = '12px Poppins';
@@ -543,7 +543,7 @@ function drawLineChart(ctx, canvas, data, color, label) {
     ctx.fillText(label, canvas.width / 2, canvas.height - 5);
     ctx.textAlign = 'right';
     ctx.fillText(`Epoch ${data.length}`, canvas.width - padding, canvas.height - 5);
-    
+
 
     ctx.textAlign = 'center';
     ctx.fillText(`Final: ${data[data.length - 1].value.toFixed(3)}`, canvas.width / 2, canvas.height - 20);
@@ -555,10 +555,10 @@ function generateRandomData() {
     // for demonstration purposes when integrating with actual CNN model
     const confidence = 85 + Math.random() * 15; // 85-100%
     mockData.assessment.confidence = Math.round(confidence * 10) / 10;
-    
+
     // Update display
     document.getElementById('confidence').textContent = `${mockData.assessment.confidence}%`;
-    
+
     // Redraw charts
     drawConfidenceChart();
 }
@@ -569,7 +569,7 @@ window.CancerNetReport = {
     nextPage,
     previousPage,
     generateRandomData,
-    updateData: function(newData) {
+    updateData: function (newData) {
         Object.assign(mockData, newData);
         loadPatientData();
         loadTables();
@@ -592,30 +592,30 @@ function downloadPDF() {
     page2.classList.remove('hidden');
 
     const opt = {
-      margin: [0, 0],
-      filename: 'cancer-report.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        scrollY: 0,
-        useCORS: true
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait'
-      },
-      pagebreak: {
-        mode: ['avoid-all', 'css', 'legacy']
-      }
+        margin: [0, 0],
+        filename: 'cancer-report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+            scale: 2,
+            scrollY: 0,
+            useCORS: true
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+        },
+        pagebreak: {
+            mode: ['avoid-all', 'css', 'legacy']
+        }
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
-      // Restore display after download
-      page1.style.display = prevDisplay1;
-      page2.style.display = prevDisplay2;
+        // Restore display after download
+        page1.style.display = prevDisplay1;
+        page2.style.display = prevDisplay2;
     });
-  }
+}
 /* // Global variables
 let currentPage = 1;
 let reportData = {}; // Will be filled from API

@@ -80,19 +80,19 @@
             <div class="patient-grid">
               <div class="patient-item blue">
                 <p class="patient-label">Patient ID</p>
-                <p class="patient-value" id="patient-id">PT-2024-001</p>
+                <p class="patient-value" id="patient-id"><%=data.patient_id%></p>
               </div>
               <div class="patient-item green">
                 <p class="patient-label">Name</p>
-                <p class="patient-value" id="patient-name">dipa das</p>
+                <p class="patient-value" id="patient-name"><%=data.name%></p>
               </div>
               <div class="patient-item purple">
                 <p class="patient-label">Age</p>
-                <p class="patient-value" id="patient-age">52 years</p>
+                <p class="patient-value" id="patient-age"><%=data.age%> years</p>
               </div>
               <div class="patient-item orange">
                 <p class="patient-label">Gender</p>
-                <p class="patient-value" id="patient-gender">Female</p>
+                <p class="patient-value" id="patient-gender"><%=data.gender%></p>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
               AI Analysis Summary
             </h2>
             <div class="ai-summary">
-              <p id="ai-summary-text"></p>
+              <p id="ai-summary-text">Based on comprehensive multi-modal analysis combining mammography, ultrasound, and fusion imaging techniques, our AI system has identified suspicious characteristics consistent with malignant tissue. The tumor presents with irregular margins, heterogeneous echo patterns, and microcalcifications typical of invasive ductal carcinoma. Confidence metrics indicate high certainty in malignant classification with supporting evidence from all imaging modalities.</p>
             </div>
           </div>
 

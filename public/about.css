@@ -20,7 +20,7 @@ a {
   height: 100%;
 }
 .header {
- display: flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
@@ -37,51 +37,47 @@ a {
   color: #333;
 }
 
-.cta-btn {
-  background-color: #e91e63;
-  color: #fff;
+#twobtns {
+  background-color: #d6d4d5;
+  text-decoration: none;
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
-  
 }
 
 .hero {
   display: flex;
   justify-content: space-between;
   padding: 2rem;
-  
-  position: relative;
-background-image: url("images/pinkHand.jpeg");
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-height: 500px; 
-color: white;
 
+  position: relative;
+  background-image: url("https://media.istockphoto.com/id/1453920100/video/4k-pink-color-neon-mourning-ribbon-stock-animation-slow-motion-breast-cancer-awareness-symbol.jpg?s=640x640&k=20&c=FueV5fabOvSz047irWa2mK4jmCJErLqSH2x6c52fM2s=");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 500px;
+  color: white;
 }
 .hero-overlay {
-background-color: transparent; 
-height: 100%;
-width: 100%;
-display: flex;
-align-items: center;
-padding: 0 2rem;
-
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
 }
 
-
- .hero-text {
-max-width: 700px;
-margin-right: 50rem;
-font-size: 1.2vw;
-font-weight: bolder;
-margin-top: 2rem;
-/* color: #e40e92; */
+.hero-text {
+  max-width: 500px;
+  margin-right: 80rem;
+  font-size: 1.25vw;
+  font-weight: bolder;
+  margin-top: 7rem;
+  /* color: #e40e92; */
 }
-.hero-text button{
+.hero-text button {
   margin-top: 2vw;
 }
 
@@ -97,15 +93,11 @@ margin-top: 2rem;
   /* background-color: #725151; */
   gap: 30px;
   flex-wrap: wrap;
-
 }
-
 
 .left-content {
   flex: 1 1 40%;
   padding: 0px 20px;
-  
-  
 }
 
 .left-content h3 {
@@ -138,7 +130,6 @@ margin-top: 2rem;
   background-color: #c2185b;
 }
 
-
 .right-content {
   flex: 1 1 55%;
   display: grid;
@@ -147,7 +138,6 @@ margin-top: 2rem;
   background-color: #fff;
   margin: 0px 30px;
 }
-
 
 .right-content div {
   text-align: left;
@@ -179,7 +169,7 @@ margin-top: 2rem;
   align-items: center;
   /* background-color: #6a964c; */
 }
-.text-block{
+.text-block {
   height: 100%;
   width: 55%;
   padding-right: 140px;
@@ -188,66 +178,64 @@ margin-top: 2rem;
   flex-direction: column;
   gap: 2vw;
 }
-.text-block h2{
+.text-block h2 {
   font-size: 2.1rem;
   padding-right: 90px;
 }
-.text-block p{
+.text-block p {
   font-size: 1.2rem;
   padding-right: 90px;
 }
-.team{
+.team {
   padding: 0px 70px;
   margin-top: 120px;
   margin-left: 1vw;
 }
-.team-grid{
+.team-grid {
   margin-bottom: 80px;
 }
-.mission div, .benefits .card, .tech-stack .card  {
+.mission div,
+.benefits .card,
+.tech-stack .card {
   margin: 2rem 0;
   margin-top: 120px;
 }
-.tech-stack{
+.tech-stack {
   text-align: center;
 }
-.benefits{
+.benefits {
   text-align: left;
-  
 }
 .benefits {
   padding: 5rem;
   padding-right: 80px;
   margin-top: 20px;
- /* color: #165181; */
- /* font-size: 2vw; */
+  /* color: #165181; */
+  /* font-size: 2vw; */
 }
-.benefits button{
+.benefits button {
   margin-left: 2vw;
 }
-.benefits h2{
-   font-size: 2vw;
+.benefits h2 {
+  font-size: 2vw;
 }
-.benefits p{
+.benefits p {
   font-size: 1vw;
-  padding-right: 17vw ;
-  margin-top: 2VW;
+  padding-right: 17vw;
+  margin-top: 2vw;
 }
-.process{
+.process {
   text-align: center;
   /* background-color: #bf3c3c; */
   /* margin-top:2vw */
 }
-.process h2{
+.process h2 {
   margin: 3vw 0vw;
-  font-size:1.7vw;
+  font-size: 1.7vw;
   /* background-color: #fff; */
-  
 }
-.hiring{
+.hiring {
   padding-left: 40px;
-  
-  
 }
 .steps {
   display: flex;
@@ -266,19 +254,19 @@ margin-top: 2rem;
   margin: 0 0.5rem;
 }
 
-.step h3{
+.step h3 {
   font-size: 1.2vw;
   margin-bottom: 1.5vw;
-} 
-.step p{
+}
+.step p {
   padding: 0vw 2vw;
   margin-bottom: 1vw;
-} 
-#step-button{
+}
+#step-button {
   margin-top: 2.1vw;
 }
 
- .tech-stack {
+.tech-stack {
   text-align: center;
   padding: 60px 30px;
   background-color: #f9f9f9;
@@ -303,7 +291,7 @@ margin-top: 2rem;
   flex: 1 1 300px;
   max-width: 500px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
 }
 
@@ -334,19 +322,17 @@ margin-top: 2rem;
   overflow: hidden;
   padding-right: 60px;
   text-align: center;
-  
-  
 }
-
 
 .tech-stack .card {
   margin-top: 0;
 }
-.tech-stack h1{ 
+.tech-stack h1 {
   font-size: 1.9rem;
 }
 
-.mission div, .benefits .card {
+.mission div,
+.benefits .card {
   margin: 2rem 0;
   margin-top: 120px;
 }
@@ -363,7 +349,6 @@ margin-top: 2rem;
   }
 }
 
-
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -371,16 +356,18 @@ margin-top: 2rem;
   flex-wrap: wrap;
   margin-top: 20px;
 }
-.card, .member {
+.card,
+.member {
   background: #fff;
   border: 1px solid #eee;
   border-radius: 20px;
   padding: 20px;
   flex: 1 1 250px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-.card h3, .member h3 {
+.card h3,
+.member h3 {
   color: #e91e63;
 }
 
@@ -388,7 +375,7 @@ margin-top: 2rem;
   font-style: bold;
   color: #131010;
 }
-.role{
+.role {
   margin-bottom: 20px;
 }
 
@@ -423,7 +410,6 @@ margin-top: 2rem;
   font-size: 1rem;
   line-height: 1.6;
   /* background-color: #725858; */
-  
 }
 
 .contact-text p {
@@ -447,11 +433,13 @@ margin-top: 2rem;
   background-color: #c2185b;
 }
 
-.contact-image, .privacy-image {
+.contact-image,
+.privacy-image {
   flex: 1 1 45%;
 }
 
-.contact-image img , .privacy-image {
+.contact-image img,
+.privacy-image {
   width: 100%;
   max-width: 500px;
   height: auto;
@@ -462,7 +450,7 @@ margin-top: 2rem;
 .privacy {
   padding: 60px 20px;
   background-color: #fdfdfd;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .privacy-container {
@@ -475,11 +463,9 @@ margin-top: 2rem;
   margin: auto;
 }
 
-
 .privacy-text {
   flex: 1 1 500px;
   text-align: left;
-  
 }
 
 .privacy-text h2 {
@@ -520,13 +506,14 @@ margin-top: 2rem;
   }
 }
 
-.vision, .detect, .benefit {
+.vision,
+.detect,
+.benefit {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
- .vission img,
+.vission img,
 .detect img,
 .benefit img,
 .team-people img {
@@ -535,12 +522,11 @@ margin-top: 2rem;
   object-fit: contain;
   margin-bottom: 10px;
   border-radius: 8px;
-  
+
   background-color: #f9f9f9;
   padding: 5px;
   transition: transform 0.3s ease;
 }
-
 
 .vission img:hover,
 .detect img:hover,
@@ -548,7 +534,6 @@ margin-top: 2rem;
 .team-people img:hover {
   transform: scale(1.1);
 }
-
 
 .footer {
   background-color: #f9f9f9;

@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to handle button clicks
 function handleButtonClick(event) {
     const buttonText = event.target.innerText;
-    alert(`You clicked the "${buttonText}" button!`);
+    // window.location.href="/login"
+    // alert(`You clicked the "${buttonText}" button!`);
 
 }
 

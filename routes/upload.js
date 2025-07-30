@@ -3,6 +3,9 @@ const multer = require("multer");
 const path = require("path");
 const db = require("../db");
 const router = express.Router();
+const axios = require("axios");
+const fs = require("fs");
+const FormData = require("form-data");
 
 // Set up storage
 const storage = multer.diskStorage({
@@ -21,7 +24,7 @@ const upload = multer({ storage });
 router.post("/upload", upload.fields([
   { name: "mammogram_path", maxCount: 1 },
   { name: "ultrasound_path", maxCount: 1 }
-]), (req, res) => {
+]), async (req, res) => {
   if (!req.session.user) {
     return res.status(401).send("Unauthorized");
   }
@@ -35,15 +38,32 @@ router.post("/upload", upload.fields([
     INSERT INTO usr_data (user_id, patient_id, name, age, gender, mammogram_path, ultrasound_path)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
-  db.query(sql, [id, patient_id, name, age, gender, mammogram, ultrasound], (err) => {
+
+  db.query(sql, [id, patient_id, name, age, gender, mammogram, ultrasound], async (err) => {
     if (err) {
       console.error("❌ Upload failed:", err);
       return res.status(500).send("Failed to upload data.");
     }
 
-    // Redirect or render result page
-    res.redirect(`/result?pid=${patient_id}`);
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("mammo", fs.createReadStream(path.join(__dirname, "../public/uploads/" + mammogram)));
+      formData.append("ultra", fs.createReadStream(path.join(__dirname, "../public/uploads/" + ultrasound)));
+
+      const fastapiRes = await axios.post("http://127.0.0.1:8000/prediction/", formData, {
+        headers: formData.getHeaders()
+      });
+
+      req.session.result = fastapiRes.data;
+      console.log(req.session.result)
+      res.redirect(`/result?pid=${patient_id}`);
+    } catch (error) {
+      console.error("❌ FastAPI Error:", error.message);
+      res.status(500).send("Prediction service failed.");
+    }
   });
 });
+
 
 module.exports = router;

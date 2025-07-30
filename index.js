@@ -22,10 +22,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 const uploadPath = path.join(__dirname, "public", "uploads");
 app.use("/uploads", express.static("public/uploads"));  // ✅ necessary for serving images
-app.use("/", resultRoutes);
-
-
-// Express-session setup
+// Session should come before any routes
 app.use(
   session({
     secret: "mySecretKey123",
@@ -33,6 +30,12 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+// Now load all routes
+app.use("/", authRoutes);
+app.use("/", resultRoutes);
+// app.use("/", uploadRoute);
+
 
 // Authentication Middleware
 function isAuthenticated(req, res, next) {
@@ -61,7 +64,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/about", (req, res) => {
-  res.render("about");
+  res.render("about",  { user: req.session.user });
 });
 
 app.get("/learn", (req, res) => {
@@ -73,7 +76,7 @@ app.get("/upload", isAuthenticated, (req, res) => {
 });
 
 app.get("/result", isAuthenticated, (req, res) => {
-  res.render("result");
+  res.render("result",{ user: req.session.user });
 });
 
 

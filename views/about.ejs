@@ -20,13 +20,19 @@
       <a href="#">Resources</a>
       
     </nav>
-    <button class="cta-btn">Join</button>
+    <button id="twobtns">
+            <% if (user) { %>
+            <a href="/logout">logout</a>
+            <% } else { %>
+            <a href="/login">JOIN</a>
+            <% } %>
+          </button>
   </header>
 
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-text">
-      <h1>About MultiMed-CancerNet</h1>
+      <h1 style="font-size: xx-large; width: 40rem;">About MultiMed-CancerNet</h1>
       <p>MultiMwd-CancerNet utilizes advanced AI technology to enhance breast cancer detection.Our platform provides clear,explainable results to support healthcare professionals and patients alike.</p>
       <button class="cta-btn">Learn More</button>
       <button class="cta-btn">Sign Up</button>
